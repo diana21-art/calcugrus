@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calcugrus | Cotizador Inteligente de Grúas</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<style>
+
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif}
+
+body{
+background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+color:white
+}
+
+header{
+background:url('https://images.unsplash.com/photo-1622557044940-59b5d0b2c1a5') center/cover no-repeat;
+height:65vh;
+color:white;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+text-align:center;
+position:relative
+}
+
+header::after{
+content:"";
+position:absolute;
+background:rgba(0,0,0,0.6);
+inset:0
+}
+
+header *{position:relative}
+
+.logo{width:120px;margin-bottom:15px}
+
+header h1{font-size:52px}
+header p{font-size:20px;margin-top:10px}
+
+nav{
+background:#111;
+padding:15px;
+text-align:center;
+position:sticky;
+top:0
+}
+
+nav a{color:white;margin:0 15px;text-decoration:none;font-weight:600}
+
+.container{max-width:1150px;margin:auto;padding:50px 20px}
+section{margin-bottom:80px}
+
+h2{margin-bottom:25px;font-size:32px}
+
+.cards{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+gap:25px
+}
+
+.card{
+background:rgba(255,255,255,0.1);
+padding:25px;
+border-radius:15px;
+backdrop-filter:blur(10px);
+box-shadow:0 10px 30px rgba(0,0,0,0.4)
+}
+
+.gallery{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:20px
+}
+
+.gallery img{
+width:100%;
+height:200px;
+object-fit:cover;
+border-radius:12px
+}
+
+/* ORGANIGRAMA */
+
+.org{display:flex;flex-direction:column;align-items:center;gap:40px}
+
+.org-row{display:flex;flex-wrap:wrap;gap:30px;justify-content:center}
+
+.person{
+background:rgba(255,255,255,0.1);
+padding:20px;
+width:240px;
+border-radius:15px;
+text-align:center;
+backdrop-filter:blur(10px)
+}
+
+.person img{
+width:85px;
+height:85px;
+border-radius:50%;
+object-fit:cover;
+margin-bottom:10px
+}
+
+.calculadora{
+background:rgba(255,255,255,0.1);
+padding:30px;
+border-radius:15px
+}
+
+label{font-weight:600}
+
+input,select{
+width:100%;
+padding:12px;
+margin:10px 0 20px 0;
+border-radius:8px;
+border:none
+}
+
+button{
+width:100%;
+padding:15px;
+border:none;
+background:#00c6ff;
+background:linear-gradient(90deg,#00c6ff,#0072ff);
+color:white;
+font-size:18px;
+border-radius:10px;
+cursor:pointer
+}
+
+.resultado{margin-top:20px;font-size:24px;font-weight:600;text-align:center;color:#00ff9c}
+
+#map{height:300px;border-radius:10px;margin-bottom:20px}
+
+footer{
+background:#000;
+padding:25px;
+text-align:center
+}
+
+footer a{color:#00c6ff;margin:0 10px;text-decoration:none}
+
+</style>
+</head>
+
+<body>
+
+<header>
+<img src="logo.png" class="logo">
+<h1>CALCUGRUS</h1>
+<p>Cotización inteligente de servicios de grúa</p>
+</header>
+
+<nav>
+<a href="#quienes">Quiénes somos</a>
+<a href="#misionvision">Misión y Visión</a>
+<a href="#objetivos">Objetivos</a>
+<a href="#organigrama">Equipo</a>
+<a href="#servicios">Servicios</a>
+<a href="#cotizador">Cotizador</a>
+</nav>
+
+<div class="container">
+
+<section id="quienes">
+<h2>¿Quiénes somos?</h2>
+<div class="card">
+Calcugrus es una plataforma tecnológica diseñada para calcular cotizaciones de servicios de grúa utilizando variables reales como distancia, tipo de vehículo, condiciones del servicio y ubicación. Nuestro objetivo es eliminar la incertidumbre en los precios y crear transparencia dentro del sector.
+</div>
+</section>
+
+<section id="misionvision">
+<h2>Misión y Visión</h2>
+
+<div class="cards">
+
+<div class="card">
+<h3>Misión</h3>
+<p>Desarrollar herramientas tecnológicas que permitan cotizar servicios de grúa de manera rápida, precisa y transparente, ayudando a usuarios y empresas a tomar mejores decisiones.</p>
+</div>
+
+<div class="card">
+<h3>Visión</h3>
+<p>Convertirnos en la plataforma líder de cotización y gestión de servicios de grúa en México y posteriormente en Latinoamérica.</p>
+</div>
+
+</div>
+
+</section>
+
+<section id="objetivos">
+<h2>Objetivos</h2>
+
+<div class="cards">
+
+<div class="card">Reducir la incertidumbre en los precios del servicio de grúa.</div>
+
+<div class="card">Facilitar cotizaciones inmediatas para usuarios.</div>
+
+<div class="card">Digitalizar procesos dentro del sector de asistencia vial.</div>
+
+<div class="card">Generar transparencia y confianza entre empresas y clientes.</div>
+
+</div>
+
+</section>
+
+<section id="servicios">
+<h2>Servicios y Operaciones</h2>
+
+<div class="gallery">
+<img src="https://images.unsplash.com/photo-1601584115197-04ecc0da31d7">
+<img src="https://images.unsplash.com/photo-1622557044940-59b5d0b2c1a5">
+<img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70">
+<img src="https://images.unsplash.com/photo-1525609004556-c46c7d6cf023">
+</div>
+
+</section>
+
+<section id="organigrama">
+<h2>Organigrama</h2>
+
+<div class="org">
+
+<div class="person">
+<img src="https://randomuser.me/api/portraits/women/44.jpg">
+<h3>Diana Claudia Huelitl</h3>
+<p><b>CEO</b></p>
+<p>Estrategia y visión del negocio<br>Modelo de precios<br>Expansión nacional</p>
+</div>
+
+<div class="org-row">
+
+<div class="person">
+<img src="https://randomuser.me/api/portraits/men/32.jpg">
+<h3>Luis Antonio Madrid Vaquero</h3>
+<p><b>Dirección Tecnológica</b></p>
+<p>Desarrollo del software<br>Actualizaciones<br>Seguridad de datos</p>
+</div>
+
+<div class="person">
+<img src="https://randomuser.me/api/portraits/women/65.jpg">
+<h3>Michelle Boyou</h3>
+<p><b>Dirección Comercial</b></p>
+<p>Ventas de licencias<br>Prospección<br>Marketing digital</p>
+</div>
+
+<div class="person">
+<img src="https://randomuser.me/api/portraits/men/76.jpg">
+<h3>Isaac Felix Mateos</h3>
+<p><b>Dirección Financiera</b></p>
+<p>Proyección de ingresos<br>Control de flujo de efectivo<br>Análisis de rentabilidad</p>
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<section id="cotizador">
+<h2>Calculadora de Cotización</h2>
+
+<div class="calculadora">
+
+<label>Selecciona tu ubicación en el mapa</label>
+<div id="map"></div>
+
+<label>Distancia (km)</label>
+<input type="number" id="distancia">
+
+<label>Tipo de Vehículo</label>
+<select id="vehiculo">
+<option value="1">Automóvil</option>
+<option value="1.4">Camioneta</option>
+<option value="1.8">Camión</option>
+</select>
+
+<label>Condición del vehículo</label>
+<select id="condicion">
+<option value="1">Se mueve solo</option>
+<option value="1.3">No se mueve</option>
+<option value="1.6">Rescate</option>
+</select>
+
+<label>Horario</label>
+<select id="horario">
+<option value="1">Normal</option>
+<option value="1.2">Nocturno</option>
+<option value="1.5">Festivo</option>
+</select>
+
+<label>Tipo de vía</label>
+<select id="via">
+<option value="1">Zona urbana</option>
+<option value="1.2">Carretera</option>
+<option value="1.5">Terracería</option>
+</select>
+
+<button onclick="calcular()">Calcular Cotización</button>
+
+<div class="resultado" id="resultado"></div>
+
+<button onclick="generarPDF()" style="margin-top:20px">Descargar PDF de cotización</button>
+
+</div>
+
+</section>
+
+</div>
+
+<footer>
+<div>
+<a href="https://instagram.com/dian_21_hm">Instagram</a>
+<a href="https://facebook.com/Diana Huelitl">Facebook</a>
+<a href="https://wa.me/5212214329307">WhatsApp</a>
+<a href="mailto:dianahuelitl@gmail.com">Correo</a>
+</div>
+Calcugrus © 2026
+</footer>
+
+<script>
+
+let map=L.map('map').setView([19.04,-98.20],13)
+L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map)
+
+let marker
+
+map.on('click',function(e){
+if(marker){map.removeLayer(marker)}
+marker=L.marker(e.latlng).addTo(map)
+})
+
+function calcular(){
+
+let distancia=document.getElementById('distancia').value
+let vehiculo=document.getElementById('vehiculo').value
+let condicion=document.getElementById('condicion').value
+let horario=document.getElementById('horario').value
+let via=document.getElementById('via').value
+
+let base=500
+let total=base+(distancia*18)
+
+total=total*vehiculo*condicion*horario*via
+
+document.getElementById('resultado').innerHTML="Cotización estimada: $"+total.toFixed(2)+" MXN"
+
+window.totalCotizacion=total.toFixed(2)
+
+}
+
+function generarPDF(){
+
+const {jsPDF}=window.jspdf
+let doc=new jsPDF()
+
+let precio=window.totalCotizacion || "No calculado"
+
+doc.text("COTIZACIÓN CALCUGRUS",20,20)
+doc.text("Precio estimado: $"+precio+" MXN",20,40)
+doc.text("Cotización generada automáticamente",20,60)
+
+doc.save("cotizacion_calcugrus.pdf")
+
+}
+
+</script>
+
+</body>
+</html>
