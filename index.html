@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calcugrus</title>
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<style>
+body{font-family:Arial,Helvetica,sans-serif;margin:0;background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);color:white}
+header{background:#000000aa;padding:20px;text-align:center}
+nav a{color:white;margin:0 15px;text-decoration:none;font-weight:bold}
+section{padding:50px 10%}
+.card{background:rgba(255,255,255,0.08);padding:25px;border-radius:12px;margin-bottom:30px;backdrop-filter:blur(10px)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:25px}
+.service img,.card img{width:100%;border-radius:10px}
+.service h3{margin-top:10px}
+footer{background:#000;padding:20px;text-align:center}
+button{padding:12px 20px;border:none;border-radius:6px;background:#00c6ff;color:white;font-weight:bold;cursor:pointer;width:100%;margin-top:10px}
+input,select{width:100%;padding:8px;margin:6px 0;border-radius:5px;border:none}
+#map{height:300px;border-radius:10px;margin-bottom:20px}
+.person{text-align:center}
+.person img{width:110px;border-radius:50%}
+</style>
+</head>
+<body>
+
+<header>
+<img src="logo.png" width="120">
+<h1>Calcugrus</h1>
+<p>Plataforma tecnológica para servicios de grúas</p>
+<nav>
+<a href="#quienes">Quiénes somos</a>
+<a href="#servicios">Servicios</a>
+<a href="#software">Software</a>
+<a href="#cotizador">Cotizador</a>
+<a href="#organigrama">Organigrama</a>
+</nav>
+</header>
+
+<section id="quienes">
+<div class="card">
+<h2>¿Quiénes somos?</h2>
+<p>Calcugrus es una plataforma tecnológica diseñada para modernizar el sector de servicios de grúas y asistencia vial. Nuestro objetivo es conectar a empresas de grúas con clientes que necesitan asistencia rápida, transparente y con cotizaciones claras desde el primer momento.</p>
+</div>
+
+<div class="grid">
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=900&q=60">
+<h3>Misión</h3>
+<p>Ofrecer una plataforma digital que permita a las empresas de grúas calcular cotizaciones rápidas, gestionar servicios y mejorar la eficiencia operativa, brindando al cliente final transparencia en precios y tiempos de servicio.</p>
+</div>
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=900&q=60">
+<h3>Visión</h3>
+<p>Convertirnos en la plataforma líder en Latinoamérica para la gestión de servicios de grúas, digitalizando el sector y facilitando la conexión entre empresas operadoras y usuarios.</p>
+</div>
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=900&q=60">
+<h3>Objetivos</h3>
+<p>
+• Automatizar cotizaciones de servicios de grúas.<br>
+• Facilitar la conexión entre empresas y clientes.<br>
+• Mejorar la eficiencia operativa del sector.<br>
+• Generar análisis de rentabilidad para empresas afiliadas.
+</p>
+</div>
+
+</div>
+</section>
+
+<section id="servicios">
+<h2>Servicios que ofrecemos</h2>
+<div class="grid">
+
+<div class="service card">
+<img src="https://images.unsplash.com/photo-1600661653561-629509216228?auto=format&fit=crop&w=900&q=60">
+<h3>Arrastre de vehículos</h3>
+<p>Traslado seguro de vehículos averiados o accidentados mediante grúas de plataforma o gancho.</p>
+</div>
+
+<div class="service card">
+<img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=900&q=60">
+<h3>Asistencia en carretera</h3>
+<p>Ayuda inmediata para conductores con fallas mecánicas, batería descargada o llantas ponchadas.</p>
+</div>
+
+<div class="service card">
+<img src="https://images.unsplash.com/photo-1493238792000-8113da705763?auto=format&fit=crop&w=900&q=60">
+<h3>Servicio nocturno</h3>
+<p>Operaciones de grúa disponibles durante la noche para emergencias o incidentes fuera de horario.</p>
+</div>
+
+<div class="service card">
+<img src="https://images.unsplash.com/photo-1581092580497-e0d23cbdf1dc?auto=format&fit=crop&w=900&q=60">
+<h3>Operadores especializados</h3>
+<p>Personal capacitado para rescate de vehículos y maniobras complejas en distintos tipos de incidentes.</p>
+</div>
+
+</div>
+</section>
+
+<section id="software">
+<h2>¿Cómo funciona el software?</h2>
+
+<div class="grid">
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1554224154-26032ffc0d07?auto=format&fit=crop&w=900&q=60">
+<h3>Cotización automática</h3>
+<p>El sistema calcula automáticamente el costo del servicio considerando distancia, tipo de vehículo, condiciones del rescate y horario.</p>
+</div>
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1556745757-8d76bdb6984b?auto=format&fit=crop&w=900&q=60">
+<h3>Gestión de servicios</h3>
+<p>Las empresas pueden registrar servicios realizados y controlar sus operaciones desde una sola plataforma.</p>
+</div>
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=900&q=60">
+<h3>Análisis financiero</h3>
+<p>Reportes automáticos de ingresos, frecuencia de servicios y rentabilidad por cliente.</p>
+</div>
+
+</div>
+</section>
+
+<section id="cotizador">
+<div class="card">
+<h2>Calculadora de cotización</h2>
+
+<label>Selecciona tu ubicación</label>
+<div id="map"></div>
+
+<label>Distancia (km)</label>
+<input id="distancia" type="number">
+
+<label>Tipo de vehículo</label>
+<select id="vehiculo">
+<option value="1">Automóvil</option>
+<option value="1.3">Camioneta</option>
+<option value="1.6">Vehículo pesado</option>
+</select>
+
+<label>Condición del vehículo</label>
+<select id="condicion">
+<option value="1">Se mueve</option>
+<option value="1.2">No se mueve</option>
+<option value="1.5">Rescate</option>
+</select>
+
+<label>Horario</label>
+<select id="horario">
+<option value="1">Normal</option>
+<option value="1.3">Nocturno/Festivo</option>
+</select>
+
+<button onclick="cotizar()">Calcular cotización</button>
+
+<h3 id="resultado"></h3>
+<button onclick="pdf()">Descargar PDF</button>
+
+</div>
+</section>
+
+<section id="organigrama">
+<div class="card">
+<h2>Organigrama</h2>
+
+<div class="grid">
+
+<div class="person">
+<img src="https://randomuser.me/api/portraits/women/44.jpg">
+<h3>Diana Claudia Huelitl</h3>
+<p>Dirección General (CEO)</p>
+</div>
+
+<div class="person">
+<img src="https://randomuser.me/api/portraits/men/32.jpg">
+<h3>Luis Antonio Madrid Vaquero</h3>
+<p>Dirección Tecnológica</p>
+</div>
+
+<div class="person">
+<img src="https://randomuser.me/api/portraits/women/68.jpg">
+<h3>Michelle Boyou</h3>
+<p>Dirección Comercial</p>
+</div>
+
+<div class="person">
+<img src="https://randomuser.me/api/portraits/men/65.jpg">
+<h3>Isaac Felix Mateos</h3>
+<p>Dirección Financiera</p>
+</div>
+
+</div>
+
+</div>
+</section>
+
+<footer>
+<p>Redes sociales</p>
+<a href="https://instagram.com/dian_21_hm">Instagram</a> |
+<a href="https://facebook.com">Facebook</a> |
+<a href="https://wa.me/5212214329307">WhatsApp</a> |
+<a href="mailto:dianahuelitl@gmail.com">Correo</a>
+</footer>
+
+<script>
+let map=L.map('map').setView([19.043,-98.198],13)
+L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19}).addTo(map)
+
+let marker
+map.on('click',function(e){
+ if(marker){map.removeLayer(marker)}
+ marker=L.marker(e.latlng).addTo(map)
+})
+
+function cotizar(){
+let d=document.getElementById("distancia").value
+let v=document.getElementById("vehiculo").value
+let c=document.getElementById("condicion").value
+let h=document.getElementById("horario").value
+
+let precio=d*15*v*c*h
+
+document.getElementById("resultado").innerText="Cotización estimada: $"+precio+" MXN"
+window.precioFinal=precio
+}
+
+function pdf(){
+const {jsPDF}=window.jspdf
+let doc=new jsPDF()
+let texto=document.getElementById("resultado").innerText
+
+doc.text("Cotización Calcugrus",20,20)
+doc.text(texto,20,40)
+
+doc.save("cotizacion.pdf")
+}
+</script>
+
+</body>
+</html>
